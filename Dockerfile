@@ -1,16 +1,24 @@
-FROM ubuntu:20.04
+FROM ubuntu:latest
 
-RUN apt-get update -y
-RUN apt-get upgrade -y 
-RUN apt-get install -y gcc g++ python3 sudo vim gdb nasm 
-RUN apt-get clean
+RUN apt-get update && apt-get upgrade -y \
+    && apt-get install -y \
+    vim \
+    gcc \
+		gdb \
+		python3 \
+		nasm \
+    build-essential \
+    coreutils \
+    bash \
+    util-linux \
+    && apt-get clean
 
-RUN echo 0 | tee /proc/sys/kernel/randomize_va_space
+RUN sysctl -w kernel.randomize_va_space=0
 
-RUN echo "ssh oder so" > /root/flag.txt 
+RUN echo "ctf" > /root/flag.txt 
 RUN chmod 400 /root/flag.txt
 
-RUN useradd -ms /bin/bash neo
+RUN useradd -m neo
 
 USER neo
 WORKDIR /home/neo
@@ -18,7 +26,6 @@ WORKDIR /home/neo
 COPY bof.asm /home/neo/bof.asm
 COPY susi.cpp /home/neo/susi.cpp
 RUN gcc -o /home/neo/susi /home/neo/susi.cpp 
-RUN chown root:root /home/neo/susi 
-RUN chmod u+s /home/neo/susi
-
+#RUN chown root:root /home/neo/susi 
+#RUN chmod u+s /home/neo/susi
 CMD ["/bin/bash"]
