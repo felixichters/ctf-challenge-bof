@@ -1,6 +1,0 @@
-secret
-hidden
-admin
-.ssh-key
-.secret
-ssh-key
