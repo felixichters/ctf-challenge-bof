@@ -17,9 +17,9 @@ RUN useradd -m neo
 USER neo
 WORKDIR /home/neo
 
-COPY bof.asm /home/neo/bof.asm
-COPY susi.cpp /home/neo/susi.cpp
-RUN gcc -o /home/neo/susi /home/neo/susi.cpp 
+#COPY bof.asm /home/neo/bof.asm
+#COPY susi.cpp /home/neo/susi.cpp
+#RUN gcc -o /home/neo/susi /home/neo/susi.cpp 
 #RUN chown root:root /home/neo/susi 
 #RUN chmod u+s /home/neo/susi
 CMD ["/bin/bash"]

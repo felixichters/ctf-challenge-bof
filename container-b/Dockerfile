@@ -11,6 +11,7 @@ RUN apt-get update && apt-get upgrade -y \
     coreutils \
     bash \
     util-linux \
+		openssh-server \
     && apt-get clean
 
 RUN sysctl -w kernel.randomize_va_space=0
@@ -26,6 +27,9 @@ WORKDIR /home/smith
 COPY bof.asm /home/smith/bof.asm
 COPY susi.cpp /home/smith/susi.cpp
 RUN gcc -o /home/smith/susi /home/smith/susi.cpp 
-#RUN chown root:root /home/smith/susi 
-#RUN chmod u+s /home/smith/susi
-CMD ["/bin/bash"]
+
+RUN service ssh start
+
+EXPOSE 22
+
+CMD ["/usr/sbin/sshd","-D"]
