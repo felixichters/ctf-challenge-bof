@@ -1,18 +1,17 @@
-global _start
+section .data
+	shell db '/bin/sh', 0
 
 section .text
+    global _start
 
 _start:
-  mov rax, 1        ; write(
-  mov rdi, 1        ;   STDOUT_FILENO,
-  mov rsi, msg      ;   "Hello, world!\n",
-  mov rdx, msglen   ;   sizeof("Hello, world!\n")
-  syscall           ; );
-
-  mov rax, 60       ; exit(
-  mov rdi, 0        ;   EXIT_SUCCESS
-  syscall           ; );
-
-section .rodata
-  msg: db "Hello, world!", 10
-  msglen: equ $ - msg
+    mov rax, 59             
+    mov rdi, shell          
+    xor rsi, rsi            
+    xor rdx, rdx            
+  
+    syscall                 
+    
+		mov rax, 60            
+    xor rdi, rdi          
+    syscall                 
