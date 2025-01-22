@@ -6,11 +6,9 @@ import threading
 
 app = Flask(__name__)
 
-# Persistent process for the C program
 process = None
 lock = threading.Lock()
 
-# HTML template
 HTML_FORM = """
 <!DOCTYPE html>
 <html>
@@ -52,7 +50,6 @@ HTML_FORM = """
 
 @app.before_request
 def start_c_program():
-    """Start the C program as a persistent process."""
     global process
     if process is None:
         process = subprocess.Popen(
@@ -62,7 +59,6 @@ def start_c_program():
             stderr=subprocess.PIPE,
             text=True
         )
-        # Read and store the leaked address
         leaked_address = process.stdout.readline().strip()
         app.config["LEAKED_ADDRESS"] = leaked_address
 
@@ -94,7 +90,6 @@ def index():
 
 @app.route("/shutdown", methods=["POST"])
 def shutdown():
-    """Shutdown the C program and the server."""
     global process
     if process:
         process.terminate()
