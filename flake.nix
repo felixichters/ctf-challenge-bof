@@ -13,6 +13,8 @@
       nativeBuildInputs = with pkgs; [
 				python3Packages.pwntools      
 				python3Packages.python-utils
+				python3Packages.flask
+				python3Packages.requests
 				];
 
       shellHook = ''

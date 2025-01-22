@@ -1,16 +1,17 @@
-FROM python:3.9
+FROM ubuntu:20.04
 
-RUN pip install flask
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    curl \
+    vim \
+    && apt-get clean
 
-RUN useradd -m ctf_user
-USER ctf_user
-WORKDIR /home/ctf_user
+RUN useradd -ms /bin/bash jeff
+USER jeff
 
-COPY challenge.c server.py exploit.py /home/ctf_user/
-COPY password_file /home/ctf_user/password_file
+WORKDIR /home/jeff
 
-RUN gcc -o challenge challenge.c -lpthread
+COPY exploit.py /home/jeff/
 
-EXPOSE 5000
-
-CMD ./challenge & python server.py
+RUN pip install requests
