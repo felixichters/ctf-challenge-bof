@@ -1,11 +1,12 @@
 from flask import Flask, request, jsonify
 import hashlib
 import time
+import threading
 
 app = Flask(__name__)
 
-FLAG = "CTF{FLAG}"
-PASSWORD_FILE = "/home/navi/Uni/it-sec/iap/container-b/passwd"
+FLAG = "CTF{}"
+PASSWORD_FILE = "/app/passwd"
 
 def read_password_file():
     try:
@@ -31,6 +32,20 @@ def authenticate():
         return jsonify({"message": "Authentication successful!", "flag": FLAG}), 200
     else:
         return jsonify({"error": "Authentication failed"}), 403
+
+@app.route('/write', methods=['POST'])
+def write_to_password_file():
+    data = request.get_json()
+    if not data or 'content' not in data:
+        return jsonify({"error": "Invalid request"}), 400
+
+    content = data['content']
+    try:
+        with open(PASSWORD_FILE, 'w') as f:
+            f.write(content)
+        return jsonify({"message": "Write successful"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
