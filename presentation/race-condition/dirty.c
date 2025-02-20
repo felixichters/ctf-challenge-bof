@@ -5,7 +5,7 @@
 #include <string.h>
 #include <time.h>
 
-#define PASSWORD_FILE "/home/navi/Uni/it-sec/iap/container-c/app/passwd"
+#define PASSWORD_FILE "/home/navi/Uni/it-sec/iap/presentation/race-condition/app/passwd"
 
 int main() {
 	int fd = open(PASSWORD_FILE, O_RDWR);
@@ -27,7 +27,7 @@ int main() {
 			buffer[i] = "abcdef0123456789"[rand() % 16];
 		}
 		buffer[32] = '\0';
-		usleep(50000);
+		usleep(5000);
 
 		lseek(fd, 0, SEEK_SET);
 		write(fd, buffer, strlen(buffer));

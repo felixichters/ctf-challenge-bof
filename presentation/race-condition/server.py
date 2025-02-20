@@ -6,7 +6,7 @@ import threading
 app = Flask(__name__)
 
 FLAG = "CTF{}"
-PASSWORD_FILE = "/home/navi/Uni/it-sec/iap/container-c/app/passwd"
+PASSWORD_FILE = "/home/navi/Uni/it-sec/iap/presentation/race-condition/app/passwd"
 
 def read_password_file():
     try:
