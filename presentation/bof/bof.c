@@ -5,4 +5,3 @@ int main() {
 	printf("Leaked: %p\n", buffer);
 	gets(buffer);
 }
-

@@ -1,13 +1,13 @@
 from pwn import *
 
-p = process('./susi')
+p = process('./vuln')
 
-payload = cyclic(300)
+payload = cyclic(400)
 
 p.sendline(payload)
 
 p.wait()
 core = p.corefile
 
-offset = cyclic_find(core.read(core.rsp, 4))
+offset = cyclic_find(core.read(core.sp, 4))
 log.info(f"Offset to return address: {offset}")
