@@ -24,7 +24,6 @@ RUN echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config
 EXPOSE 22
 
 COPY vuln.c /home/user/vuln.c
-COPY buffer.py /home/user/buffer.py
 COPY exploit.py /home/user/exploit.py
 RUN gcc -fno-stack-protector -z execstack home/user/vuln.c -o /home/user/vuln
 
