@@ -22,6 +22,8 @@ RUN chsh -s /usr/bin/zsh user
 RUN mkdir /var/run/sshd
 RUN echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
 RUN echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config
+RUN ln -sf /shared/authorized_keys /home/user/.ssh/authorized_keys && \
+    chown -h user:user /home/user/.ssh/authorized_keys
 EXPOSE 22
 
 COPY vuln.c /home/user/vuln.c

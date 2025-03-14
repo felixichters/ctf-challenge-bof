@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 
-#define DELAY 50000
+#define DELAY 500000
 
 int main(int argc, char * argv[]) { 
 	char * fileName = argv[1];
