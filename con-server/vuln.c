@@ -3,15 +3,17 @@
 #include <unistd.h>
 #include <string.h>
 
-#define DELAY 50000
+#define DELAY 500000
 
 int main(int argc, char * argv[]) { 
 	char * fileName = argv[1];
-	char buffer[60];
+	char buffer[420];
+	
+	strncpy(buffer, argv[2], sizeof(buffer) - 1);
+	buffer[sizeof(buffer) - 1] = '\0'; // Ensure null-termination
+	
 	int i;
 	FILE * fileHandler;
-
-	scanf("%50s", buffer );
 
 	if(!access(fileName, W_OK)) {
 		for(i = 0; i < DELAY;i++) {
@@ -19,9 +21,7 @@ int main(int argc, char * argv[]) {
 		}
 
 		fileHandler = fopen(fileName, "a+"); 
-		fwrite("n", sizeof(char), 1, fileHandler);
 		fwrite(buffer, sizeof(char), strlen(buffer), fileHandler); 
-		fwrite("n", sizeof(char), 1, fileHandler); 
 		fclose(fileHandler);
 	} else {
 		printf("No permission n");
