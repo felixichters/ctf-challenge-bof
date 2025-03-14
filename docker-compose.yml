@@ -2,32 +2,36 @@ version: '3'
 services:
   container1:
     build:
-      context: ./container-a
+      context: ./con-start
     ports:
       - "2222:22"
     networks:
       - ctf_network
+    volumes:
+      - shared:/shared
 
   container2:
     build:
-      context: ./container-b
+      context: ./con-server
     ports:
-      - "2223:22"
-    depends_on:
-      - container1
+      - "5000:5000"
     networks:
       - ctf_network
+    volumes:
+      - shared:/shared
 
   container3:
     build:
-      context: ./container-c
+      context: ./con-bof
     ports:
-      - "5000:5000"
-    depends_on:
-      - container2
+      - "2223:22"
     networks:
       - ctf_network
+    volumes:
+      - shared:/shared
 
 networks:
   ctf_network:
     driver: bridge
+volumes:
+  shared:
