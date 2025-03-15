@@ -1,28 +1,27 @@
-version: '3'
-services:
-  container1:
+services: 
+  start:
     build:
-      context: ./con-start
+      context: ./start
     ports:
       - "2222:22"
     networks:
       - ctf_network
     volumes:
       - shared:/shared
-
-  container2:
+  
+  server:
     build:
-      context: ./con-server
+      context: ./server
     ports:
       - "5000:5000"
     networks:
       - ctf_network
     volumes:
-      - shared:/shared
+      - shared:/app/shared
 
-  container3:
+  bof:
     build:
-      context: ./con-bof
+      context: ./buffer-overflow
     ports:
       - "2223:22"
     networks:
